@@ -150,28 +150,28 @@ function ProductCard({ product }: { product: any }) {
   const { t } = useTranslation()
 
   return (
-    <Card className="group overflow-hidden hover:shadow-xl transition-all duration-300 hover:-translate-y-1 animate-fade-in">
+    <Card className="group overflow-hidden hover-lift bg-card border-border/50 hover:border-primary/20 animate-fade-in">
       <CardHeader className="p-0">
         <div className="relative overflow-hidden">
           <img
             src={product.image || "/placeholder.svg"}
             alt={product.title}
-            className="w-full h-32 object-cover group-hover:scale-105 transition-transform duration-300"
+            className="w-full h-32 object-cover group-hover:scale-105 transition-transform duration-500"
           />
           {product.featured && (
-            <Badge className="absolute top-2 left-2 bg-gradient-gold text-black">
+            <Badge className="absolute top-2 left-2 btn-accent border-0">
               <Star className="w-3 h-3 mr-1" />
               Featured
             </Badge>
           )}
           <div className="absolute top-2 right-2">
-            <Button size="sm" variant="ghost" className="glass text-white hover:bg-white/20">
+            <Button size="sm" variant="ghost" className="glass text-white hover:bg-white/20 border-0">
               <Heart className="w-4 h-4" />
             </Button>
           </div>
           {product.type === "auction" && (
             <div className="absolute bottom-2 left-2">
-              <Badge variant="destructive" className="animate-pulse">
+              <Badge className="bg-primary text-primary-foreground animate-pulse border-0">
                 <Gavel className="w-3 h-3 mr-1" />
                 {t("product.auction")}
               </Badge>
@@ -179,7 +179,7 @@ function ProductCard({ product }: { product: any }) {
           )}
           {product.type === "trade" && (
             <div className="absolute bottom-2 left-2">
-              <Badge className="bg-blue-600 text-white">
+              <Badge className="btn-accent border-0">
                 <ArrowRightLeft className="w-3 h-3 mr-1" />
                 {t("product.trade")}
               </Badge>
@@ -193,11 +193,11 @@ function ProductCard({ product }: { product: any }) {
         </h3>
         <div className="flex items-center gap-2 mb-2">
           <Avatar className="w-5 h-5">
-            <AvatarFallback className="text-xs">{product.seller[0]}</AvatarFallback>
+            <AvatarFallback className="text-xs bg-muted">{product.seller[0]}</AvatarFallback>
           </Avatar>
           <span className="text-xs text-muted-foreground">{product.seller}</span>
           <div className="flex items-center gap-1">
-            <Star className="w-3 h-3 fill-yellow-400 text-yellow-400" />
+            <Star className="w-3 h-3 fill-accent text-accent" />
             <span className="text-xs text-muted-foreground">{product.rating}</span>
           </div>
         </div>
@@ -206,7 +206,7 @@ function ProductCard({ product }: { product: any }) {
           <div className="space-y-1">
             <div className="flex justify-between items-center">
               <span className="text-xs text-muted-foreground">Current bid</span>
-              <span className="font-bold text-base">${product.currentBid.toLocaleString()}</span>
+              <span className="font-bold text-base text-primary">${product.currentBid.toLocaleString()}</span>
             </div>
             <CountdownTimer endTime={product.endTime} />
           </div>
@@ -215,7 +215,7 @@ function ProductCard({ product }: { product: any }) {
         {product.type === "fixed" && (
           <div className="flex justify-between items-center">
             <span className="text-xs text-muted-foreground">Price</span>
-            <span className="font-bold text-lg">${product.price.toLocaleString()}</span>
+            <span className="font-bold text-lg text-primary">${product.price.toLocaleString()}</span>
           </div>
         )}
 
@@ -223,7 +223,7 @@ function ProductCard({ product }: { product: any }) {
           <div className="space-y-1">
             <div className="flex justify-between items-center">
               <span className="text-xs text-muted-foreground">Value</span>
-              <span className="font-bold text-base">${product.price.toLocaleString()}</span>
+              <span className="font-bold text-base text-primary">${product.price.toLocaleString()}</span>
             </div>
             <p className="text-xs text-muted-foreground line-clamp-1">Looking for: {product.tradeFor}</p>
           </div>
@@ -231,24 +231,24 @@ function ProductCard({ product }: { product: any }) {
       </CardContent>
       <CardFooter className="p-3 pt-0 flex gap-1">
         {product.type === "auction" && (
-          <Button className="flex-1 gradient-gold text-black hover:opacity-90 text-sm">
+          <Button className="flex-1 btn-primary text-sm">
             <Gavel className="w-3 h-3 mr-1" />
             {t("product.bid")}
           </Button>
         )}
         {product.type === "fixed" && (
-          <Button className="flex-1 bg-primary text-primary-foreground hover:bg-primary/90 text-sm">
+          <Button className="flex-1 btn-primary text-sm">
             <ShoppingBag className="w-3 h-3 mr-1" />
             {t("product.buyNow")}
           </Button>
         )}
         {product.type === "trade" && (
-          <Button className="flex-1 bg-blue-600 text-white hover:bg-blue-700 text-sm">
+          <Button className="flex-1 btn-accent text-sm">
             <ArrowRightLeft className="w-3 h-3 mr-1" />
             {t("product.trade")}
           </Button>
         )}
-        <Button size="icon" variant="outline" className="h-8 w-8 bg-transparent">
+        <Button size="icon" variant="outline" className="h-8 w-8 bg-transparent hover:bg-muted">
           <MessageCircle className="w-3 h-3" />
         </Button>
       </CardFooter>
@@ -364,92 +364,302 @@ function MarketplaceContent() {
   return (
     <div className="min-h-screen bg-background">
       {/* Navigation */}
-      <nav className="sticky top-0 z-50 bg-background/80 backdrop-blur-md border-b">
+      <nav className="sticky top-0 z-[100] glass border-b border-border/50 backdrop-blur-xl bg-background/95 shadow-lg">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex items-center justify-between h-16">
+          <div className="flex items-center justify-between h-20">
             <div className="flex items-center gap-8">
-              <div className="flex items-center gap-2">
-                <div className="w-8 h-8 bg-gradient-gold rounded-lg flex items-center justify-center mx-auto mb-3">
-                  <ShoppingBag className="w-5 h-5 text-black" />
+              <div className="flex items-center gap-3 group">
+                <div className="w-12 h-12 gradient-primary rounded-2xl flex items-center justify-center shadow-xl group-hover:shadow-2xl transition-all duration-500 group-hover:scale-110">
+                  <ShoppingBag className="w-7 h-7 text-primary-foreground" />
                 </div>
-                <span className="font-serif text-xl font-bold">MarketPlace</span>
+                <div>
+                  <span className="font-serif text-3xl font-bold text-foreground bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent">
+                    MarketPlace
+                  </span>
+                  <div className="text-xs text-muted-foreground font-medium tracking-wider">PREMIUM TRADING</div>
+                </div>
               </div>
 
-              <div className="hidden md:flex items-center gap-6">
-                <Button variant="ghost">{t("nav.home")}</Button>
-                <Button variant="ghost">{t("nav.browse")}</Button>
-                <Button variant="ghost" onClick={() => setShowListingForm(true)}>
-                  {t("nav.sell")}
+              <div className="hidden lg:flex items-center gap-1">
+                <Button
+                  variant="ghost"
+                  className="hover:text-primary hover:bg-primary/10 transition-all duration-300 font-medium px-6 py-3 rounded-xl relative group"
+                >
+                  <span className="relative z-10">{t("nav.home")}</span>
+                  <div className="absolute inset-0 bg-primary/5 rounded-xl scale-0 group-hover:scale-100 transition-transform duration-300"></div>
                 </Button>
+
+                <DropdownMenu>
+                  <DropdownMenuTrigger asChild>
+                    <Button
+                      variant="ghost"
+                      className="hover:text-primary hover:bg-primary/10 transition-all duration-300 font-medium px-6 py-3 rounded-xl relative group"
+                    >
+                      <span className="relative z-10">{t("nav.browse")}</span>
+                      <div className="absolute inset-0 bg-primary/5 rounded-xl scale-0 group-hover:scale-100 transition-transform duration-300"></div>
+                    </Button>
+                  </DropdownMenuTrigger>
+                  <DropdownMenuContent
+                    align="start"
+                    className="bg-card/98 backdrop-blur-2xl border-border/50 shadow-2xl min-w-[280px] z-[200] animate-in slide-in-from-top-2 duration-300"
+                    sideOffset={8}
+                  >
+                    <div className="p-2">
+                      <DropdownMenuItem className="hover:bg-primary/10 transition-all duration-200 rounded-lg p-3">
+                        <Gavel className="w-5 h-5 mr-3 text-primary" />
+                        <div>
+                          <div className="font-medium">Live Auctions</div>
+                          <div className="text-xs text-muted-foreground">Bid on premium items</div>
+                        </div>
+                      </DropdownMenuItem>
+                      <DropdownMenuItem className="hover:bg-primary/10 transition-all duration-200 rounded-lg p-3">
+                        <ShoppingBag className="w-5 h-5 mr-3 text-primary" />
+                        <div>
+                          <div className="font-medium">Buy Now</div>
+                          <div className="text-xs text-muted-foreground">Fixed price items</div>
+                        </div>
+                      </DropdownMenuItem>
+                      <DropdownMenuItem className="hover:bg-primary/10 transition-all duration-200 rounded-lg p-3">
+                        <ArrowRightLeft className="w-5 h-5 mr-3 text-primary" />
+                        <div>
+                          <div className="font-medium">Trade Exchange</div>
+                          <div className="text-xs text-muted-foreground">Swap your items</div>
+                        </div>
+                      </DropdownMenuItem>
+                    </div>
+                  </DropdownMenuContent>
+                </DropdownMenu>
+
+                <Button
+                  variant="ghost"
+                  onClick={() => setShowListingForm(true)}
+                  className="hover:text-primary hover:bg-primary/10 transition-all duration-300 font-medium px-6 py-3 rounded-xl relative group"
+                >
+                  <span className="relative z-10">{t("nav.sell")}</span>
+                  <div className="absolute inset-0 bg-primary/5 rounded-xl scale-0 group-hover:scale-100 transition-transform duration-300"></div>
+                </Button>
+
+                <DropdownMenu>
+                  <DropdownMenuTrigger asChild>
+                    <Button
+                      variant="ghost"
+                      className="hover:text-primary hover:bg-primary/10 transition-all duration-300 font-medium px-6 py-3 rounded-xl relative group"
+                    >
+                      <span className="relative z-10">Auctions</span>
+                      <div className="absolute inset-0 bg-primary/5 rounded-xl scale-0 group-hover:scale-100 transition-transform duration-300"></div>
+                    </Button>
+                  </DropdownMenuTrigger>
+                  <DropdownMenuContent
+                    align="start"
+                    className="bg-card/98 backdrop-blur-2xl border-border/50 shadow-2xl min-w-[260px] z-[200] animate-in slide-in-from-top-2 duration-300"
+                    sideOffset={8}
+                  >
+                    <div className="p-2">
+                      <DropdownMenuItem className="hover:bg-accent/10 transition-all duration-200 rounded-lg p-3">
+                        <Clock className="w-5 h-5 mr-3 text-accent" />
+                        <div>
+                          <div className="font-medium">Ending Soon</div>
+                          <div className="text-xs text-muted-foreground">Final hours</div>
+                        </div>
+                      </DropdownMenuItem>
+                      <DropdownMenuItem className="hover:bg-accent/10 transition-all duration-200 rounded-lg p-3">
+                        <TrendingUp className="w-5 h-5 mr-3 text-accent" />
+                        <div>
+                          <div className="font-medium">Hot Auctions</div>
+                          <div className="text-xs text-muted-foreground">Most active</div>
+                        </div>
+                      </DropdownMenuItem>
+                      <DropdownMenuItem className="hover:bg-accent/10 transition-all duration-200 rounded-lg p-3">
+                        <Star className="w-5 h-5 mr-3 text-accent" />
+                        <div>
+                          <div className="font-medium">Premium Items</div>
+                          <div className="text-xs text-muted-foreground">High-value auctions</div>
+                        </div>
+                      </DropdownMenuItem>
+                    </div>
+                  </DropdownMenuContent>
+                </DropdownMenu>
               </div>
             </div>
 
-            <div className="flex items-center gap-4">
-              {/* Language Switcher */}
+            <div className="flex items-center gap-2">
               <DropdownMenu>
                 <DropdownMenuTrigger asChild>
-                  <Button variant="ghost" size="icon">
-                    <Globe className="w-4 h-4" />
+                  <Button
+                    variant="ghost"
+                    size="icon"
+                    className="hover:bg-primary/10 hover:text-primary transition-all duration-300 relative group rounded-xl w-12 h-12"
+                  >
+                    <Globe className="w-5 h-5 group-hover:rotate-12 transition-transform duration-300" />
+                    <div className="absolute -top-1 -right-1 w-4 h-4 bg-accent rounded-full border-2 border-background animate-pulse"></div>
                   </Button>
                 </DropdownMenuTrigger>
-                <DropdownMenuContent align="end">
-                  {languages.map((lang) => (
-                    <DropdownMenuItem
-                      key={lang.code}
-                      onClick={() => setLanguage(lang.code)}
-                      className={language === lang.code ? "bg-accent" : ""}
-                    >
-                      <span className="mr-2">{lang.flag}</span>
-                      {lang.name}
-                    </DropdownMenuItem>
-                  ))}
+                <DropdownMenuContent
+                  align="end"
+                  className="bg-card/98 backdrop-blur-2xl border-border/50 shadow-2xl min-w-[200px] z-[200] animate-in slide-in-from-top-2 duration-300"
+                  sideOffset={8}
+                >
+                  <div className="p-2">
+                    {languages.map((lang) => (
+                      <DropdownMenuItem
+                        key={lang.code}
+                        onClick={() => setLanguage(lang.code)}
+                        className={`transition-all duration-200 rounded-lg p-3 ${
+                          language === lang.code ? "bg-primary/10 text-primary" : "hover:bg-muted/50"
+                        }`}
+                      >
+                        <span className="mr-3 text-lg">{lang.flag}</span>
+                        <span className="font-medium flex-1">{lang.name}</span>
+                        {language === lang.code && (
+                          <div className="w-2 h-2 bg-primary rounded-full animate-pulse"></div>
+                        )}
+                      </DropdownMenuItem>
+                    ))}
+                  </div>
                 </DropdownMenuContent>
               </DropdownMenu>
 
-              {/* Theme Toggle */}
-              <Button variant="ghost" size="icon" onClick={() => setTheme(theme === "dark" ? "light" : "dark")}>
-                <Sun className="h-4 w-4 rotate-0 scale-100 transition-all dark:-rotate-90 dark:scale-0" />
-                <Moon className="absolute h-4 w-4 rotate-90 scale-0 transition-all dark:rotate-0 dark:scale-100" />
+              <Button
+                variant="ghost"
+                size="icon"
+                onClick={() => setTheme(theme === "dark" ? "light" : "dark")}
+                className="hover:bg-primary/10 hover:text-primary transition-all duration-300 relative overflow-hidden group rounded-xl w-12 h-12"
+              >
+                <Sun className="h-5 w-5 rotate-0 scale-100 transition-all duration-500 group-hover:rotate-180 dark:-rotate-90 dark:scale-0" />
+                <Moon className="absolute h-5 w-5 rotate-90 scale-0 transition-all duration-500 group-hover:-rotate-180 dark:rotate-0 dark:scale-100" />
+                <div className="absolute inset-0 bg-gradient-to-r from-primary/20 to-accent/20 rounded-xl scale-0 group-hover:scale-100 transition-transform duration-300"></div>
               </Button>
 
-              <Button variant="ghost" size="icon">
-                <Bell className="w-4 h-4" />
+              <Button
+                variant="ghost"
+                size="icon"
+                className="hover:bg-primary/10 hover:text-primary transition-all duration-300 relative group rounded-xl w-12 h-12"
+              >
+                <Bell className="w-5 h-5 group-hover:animate-bounce" />
+                <div className="absolute -top-1 -right-1 w-6 h-6 bg-accent text-accent-foreground rounded-full text-xs font-bold flex items-center justify-center border-2 border-background shadow-lg animate-pulse">
+                  3
+                </div>
               </Button>
 
-              <Button variant="ghost" size="icon">
-                <ShoppingCart className="w-4 h-4" />
+              <Button
+                variant="ghost"
+                size="icon"
+                className="hover:bg-primary/10 hover:text-primary transition-all duration-300 relative group rounded-xl w-12 h-12"
+              >
+                <ShoppingCart className="w-5 h-5 group-hover:scale-110 transition-transform duration-300" />
+                <div className="absolute -top-1 -right-1 w-6 h-6 bg-primary text-primary-foreground rounded-full text-xs font-bold flex items-center justify-center border-2 border-background shadow-lg">
+                  2
+                </div>
               </Button>
 
               <DropdownMenu>
                 <DropdownMenuTrigger asChild>
-                  <Button variant="ghost" size="icon">
+                  <Button
+                    variant="ghost"
+                    className="hover:bg-primary/10 transition-all duration-300 p-2 rounded-xl group"
+                  >
                     {user ? (
-                      <Avatar className="w-8 h-8">
-                        <AvatarFallback>{user.name[0]}</AvatarFallback>
-                      </Avatar>
+                      <div className="flex items-center gap-3">
+                        <Avatar className="w-10 h-10 ring-2 ring-primary/30 group-hover:ring-primary/50 transition-all duration-300">
+                          <AvatarFallback className="bg-gradient-to-br from-primary to-accent text-primary-foreground font-bold text-lg">
+                            {user.name[0]}
+                          </AvatarFallback>
+                        </Avatar>
+                        <div className="hidden md:block text-left">
+                          <div className="text-sm font-semibold text-foreground group-hover:text-primary transition-colors">
+                            {user.name}
+                          </div>
+                          <div className="text-xs text-muted-foreground">Premium Member</div>
+                        </div>
+                      </div>
                     ) : (
-                      <User className="w-4 h-4" />
+                      <div className="flex items-center gap-2 px-2">
+                        <User className="w-5 h-5" />
+                        <span className="hidden md:inline font-medium">Sign In</span>
+                      </div>
                     )}
                   </Button>
                 </DropdownMenuTrigger>
-                <DropdownMenuContent align="end">
+                <DropdownMenuContent
+                  align="end"
+                  className="bg-card/98 backdrop-blur-2xl border-border/50 shadow-2xl min-w-[260px] z-[200] animate-in slide-in-from-top-2 duration-300"
+                  sideOffset={8}
+                >
                   {user ? (
-                    <>
-                      <DropdownMenuItem onClick={() => setShowDashboard(true)}>{t("nav.account")}</DropdownMenuItem>
-                      <DropdownMenuItem onClick={handleLogout}>Logout</DropdownMenuItem>
-                    </>
+                    <div className="p-2">
+                      <div className="px-3 py-4 border-b border-border/50 mb-2">
+                        <div className="font-semibold text-foreground">{user.name}</div>
+                        <div className="text-sm text-muted-foreground">{user.email}</div>
+                        <div className="flex items-center gap-1 mt-2">
+                          <Star className="w-4 h-4 fill-accent text-accent" />
+                          <span className="text-sm text-muted-foreground">{user.rating} rating</span>
+                          <Badge className="ml-2 text-xs bg-primary/10 text-primary border-primary/20">Premium</Badge>
+                        </div>
+                      </div>
+                      <DropdownMenuItem
+                        onClick={() => setShowDashboard(true)}
+                        className="hover:bg-primary/10 transition-all duration-200 rounded-lg p-3"
+                      >
+                        <User className="w-5 h-5 mr-3 text-primary" />
+                        <div>
+                          <div className="font-medium">{t("nav.account")}</div>
+                          <div className="text-xs text-muted-foreground">Manage profile</div>
+                        </div>
+                      </DropdownMenuItem>
+                      <DropdownMenuItem className="hover:bg-primary/10 transition-all duration-200 rounded-lg p-3">
+                        <Heart className="w-5 h-5 mr-3 text-primary" />
+                        <div>
+                          <div className="font-medium">Watchlist</div>
+                          <div className="text-xs text-muted-foreground">Saved items</div>
+                        </div>
+                      </DropdownMenuItem>
+                      <DropdownMenuItem className="hover:bg-primary/10 transition-all duration-200 rounded-lg p-3">
+                        <MessageCircle className="w-5 h-5 mr-3 text-primary" />
+                        <div>
+                          <div className="font-medium">Messages</div>
+                          <div className="text-xs text-muted-foreground">Chat history</div>
+                        </div>
+                      </DropdownMenuItem>
+                      <div className="border-t border-border/50 mt-2 pt-2">
+                        <DropdownMenuItem
+                          onClick={handleLogout}
+                          className="hover:bg-destructive/10 text-destructive transition-all duration-200 rounded-lg p-3"
+                        >
+                          <div className="font-medium">Logout</div>
+                        </DropdownMenuItem>
+                      </div>
+                    </div>
                   ) : (
-                    <>
-                      <DropdownMenuItem onClick={() => setShowAuthModal(true)}>{t("nav.login")}</DropdownMenuItem>
-                      <DropdownMenuItem onClick={() => setShowAuthModal(true)}>{t("nav.signup")}</DropdownMenuItem>
-                    </>
+                    <div className="p-2">
+                      <DropdownMenuItem
+                        onClick={() => setShowAuthModal(true)}
+                        className="hover:bg-primary/10 transition-all duration-200 rounded-lg p-3"
+                      >
+                        <User className="w-5 h-5 mr-3 text-primary" />
+                        <div>
+                          <div className="font-medium">{t("nav.login")}</div>
+                          <div className="text-xs text-muted-foreground">Access your account</div>
+                        </div>
+                      </DropdownMenuItem>
+                      <DropdownMenuItem
+                        onClick={() => setShowAuthModal(true)}
+                        className="hover:bg-primary/10 transition-all duration-200 rounded-lg p-3"
+                      >
+                        <ShoppingBag className="w-5 h-5 mr-3 text-primary" />
+                        <div>
+                          <div className="font-medium">{t("nav.signup")}</div>
+                          <div className="text-xs text-muted-foreground">Join the marketplace</div>
+                        </div>
+                      </DropdownMenuItem>
+                    </div>
                   )}
                 </DropdownMenuContent>
               </DropdownMenu>
 
-              <Button className="hidden md:inline-flex">
-                <Menu className="w-4 h-4 mr-2" />
-                Menu
+              <Button className="hidden lg:inline-flex btn-primary shadow-xl hover:shadow-2xl transition-all duration-500 font-semibold px-8 py-3 rounded-2xl bg-gradient-to-r from-primary to-accent hover:from-primary/90 hover:to-accent/90 group relative overflow-hidden">
+                <div className="absolute inset-0 bg-gradient-to-r from-white/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+                <Menu className="w-4 h-4 mr-2 group-hover:rotate-180 transition-transform duration-300" />
+                <span className="relative z-10">Start Selling</span>
               </Button>
             </div>
           </div>
@@ -457,188 +667,237 @@ function MarketplaceContent() {
       </nav>
 
       {/* Hero Section */}
-      <section className="relative py-20 px-4 sm:px-6 lg:px-8 bg-gradient-to-br from-background via-secondary/50 to-background">
-        <div className="max-w-4xl mx-auto text-center">
-          <h1 className="font-serif text-4xl md:text-6xl font-bold mb-6 animate-fade-in text-balance">
+      <section className="relative py-32 px-4 sm:px-6 lg:px-8 overflow-hidden">
+        <div className="absolute inset-0 z-0">
+          <img
+            src="/minimalist-black-and-white-marketplace-background-.jpg"
+            alt="Marketplace Background"
+            className="w-full h-full object-cover"
+          />
+          <div className="absolute inset-0 bg-gradient-to-br from-background/90 via-background/70 to-background/90"></div>
+          <div className="absolute inset-0 bg-gradient-to-t from-primary/5 via-transparent to-accent/5"></div>
+        </div>
+
+        <div className="max-w-5xl mx-auto text-center relative z-10">
+          <div className="inline-flex items-center gap-2 bg-card/80 backdrop-blur-sm border border-border/50 rounded-full px-6 py-3 mb-8 animate-fade-in">
+            <div className="w-2 h-2 bg-accent rounded-full animate-pulse"></div>
+            <span className="text-sm font-medium text-muted-foreground">Trusted by 50,000+ users worldwide</span>
+          </div>
+
+          <h1 className="text-display mb-8 animate-fade-in text-balance text-foreground leading-tight">
             {t("hero.title")}
           </h1>
-          <p className="text-xl text-muted-foreground mb-8 animate-fade-in text-pretty">{t("hero.subtitle")}</p>
+          <p className="text-2xl text-muted-foreground mb-12 animate-slide-up text-pretty max-w-3xl mx-auto leading-relaxed">
+            {t("hero.subtitle")}
+          </p>
 
-          <div className="max-w-2xl mx-auto relative animate-scale-in">
-            <Search className="absolute left-4 top-1/2 transform -translate-y-1/2 text-muted-foreground w-5 h-5" />
-            <Input
-              placeholder={t("hero.search")}
-              value={searchQuery}
-              onChange={(e) => setSearchQuery(e.target.value)}
-              className="pl-12 pr-4 py-6 text-lg rounded-2xl border-2 focus:border-primary"
-            />
-            <Button className="absolute right-2 top-1/2 transform -translate-y-1/2 gradient-gold text-black hover:opacity-90">
-              Search
+          <div className="max-w-3xl mx-auto relative animate-scale-in mb-12">
+            <div className="relative">
+              <Search className="absolute left-6 top-1/2 transform -translate-y-1/2 text-muted-foreground w-6 h-6" />
+              <Input
+                placeholder={t("hero.search")}
+                value={searchQuery}
+                onChange={(e) => setSearchQuery(e.target.value)}
+                className="pl-16 pr-32 py-8 text-xl rounded-3xl border-2 focus:border-primary bg-card/80 backdrop-blur-sm shadow-2xl hover:shadow-3xl transition-all duration-300"
+              />
+              <Button className="absolute right-3 top-1/2 transform -translate-y-1/2 btn-primary px-8 py-4 text-lg font-medium shadow-lg hover:shadow-xl transition-all duration-300">
+                Search
+              </Button>
+            </div>
+          </div>
+
+          {/* Enhanced Quick Actions */}
+          <div className="flex flex-wrap items-center justify-center gap-4 animate-slide-up">
+            <Button
+              variant="outline"
+              className="bg-card/80 backdrop-blur-sm border-border/50 hover:bg-primary/10 hover:border-primary transition-all duration-300"
+            >
+              <Gavel className="w-4 h-4 mr-2" />
+              Live Auctions
+            </Button>
+            <Button
+              variant="outline"
+              className="bg-card/80 backdrop-blur-sm border-border/50 hover:bg-primary/10 hover:border-primary transition-all duration-300"
+            >
+              <ShoppingBag className="w-4 h-4 mr-2" />
+              Buy Now
+            </Button>
+            <Button
+              variant="outline"
+              className="bg-card/80 backdrop-blur-sm border-border/50 hover:bg-primary/10 hover:border-primary transition-all duration-300"
+            >
+              <ArrowRightLeft className="w-4 h-4 mr-2" />
+              Trade Items
             </Button>
           </div>
         </div>
       </section>
 
-      {/* Minimalist Image Gallery Section */}
-      <section className="py-16 px-4 sm:px-6 lg:px-8 bg-background">
+      {/* Enhanced Gallery Section */}
+      <section className="py-20 px-4 sm:px-6 lg:px-8 bg-secondary/30">
         <div className="max-w-7xl mx-auto">
-          {/* Simple Header */}
-          <div className="text-center mb-12">
-            <h2 className="font-serif text-3xl font-bold mb-4">Featured Products</h2>
-            <p className="text-muted-foreground">Premium selections from our marketplace</p>
+          {/* Elegant Header */}
+          <div className="text-center mb-16 animate-fade-in">
+            <h2 className="text-heading mb-4 text-foreground">Featured Products</h2>
+            <p className="text-muted-foreground text-lg">Curated selections from our premium marketplace</p>
+            <div className="w-24 h-1 bg-accent mx-auto mt-6 rounded-full"></div>
           </div>
 
-          {/* Main Gallery Grid */}
-          <div className="grid grid-cols-1 md:grid-cols-4 gap-4 mb-12">
+          {/* Sophisticated Gallery Grid */}
+          <div className="grid grid-cols-1 md:grid-cols-4 gap-6 mb-16 animate-slide-up">
             {/* Large Featured Image */}
             <div
-              className="md:col-span-2 md:row-span-2 group cursor-pointer"
+              className="md:col-span-2 md:row-span-2 group cursor-pointer hover-lift"
               onClick={() => setSelectedProduct(enhancedMockProducts.find((p) => p.id === 1))}
             >
-              <div className="relative h-96 bg-black rounded-lg overflow-hidden">
+              <div className="relative h-96 bg-card rounded-2xl overflow-hidden shadow-lg">
                 <img
                   src="/luxury-watch.jpg"
                   alt="Vintage Rolex Submariner"
-                  className="w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-500 group-hover:scale-105"
+                  className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
                 />
-                <div className="absolute inset-0 bg-black/40 group-hover:bg-black/20 transition-colors duration-300"></div>
-                <div className="absolute bottom-6 left-6 text-white">
-                  <h3 className="text-2xl font-bold mb-2">Vintage Rolex Submariner</h3>
-                  <p className="text-white/80">$8,500</p>
+                <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent"></div>
+                <div className="absolute bottom-8 left-8 text-white">
+                  <h3 className="text-2xl font-serif font-bold mb-2">Vintage Rolex Submariner</h3>
+                  <p className="text-white/90 text-lg font-semibold">$8,500</p>
+                  <Badge className="mt-3 btn-accent border-0">
+                    <Star className="w-3 h-3 mr-1" />
+                    Featured
+                  </Badge>
                 </div>
               </div>
             </div>
 
-            {/* Small Gallery Items */}
+            {/* Elegant Small Gallery Items */}
             <div
-              className="group cursor-pointer"
+              className="group cursor-pointer hover-lift"
               onClick={() => setSelectedProduct(enhancedMockProducts.find((p) => p.id === 2))}
             >
-              <div className="relative h-44 bg-black rounded-lg overflow-hidden">
+              <div className="relative h-44 bg-card rounded-xl overflow-hidden shadow-md">
                 <img
                   src="/silver-macbook-on-desk.png"
                   alt="MacBook Pro M3"
-                  className="w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-500"
+                  className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
                 />
-                <div className="absolute inset-0 bg-black/40 group-hover:bg-black/20 transition-colors duration-300"></div>
+                <div className="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent"></div>
                 <div className="absolute bottom-4 left-4 text-white">
-                  <h4 className="font-bold">MacBook Pro M3</h4>
-                  <p className="text-white/80 text-sm">$2,499</p>
+                  <h4 className="font-semibold">MacBook Pro M3</h4>
+                  <p className="text-white/90 text-sm">$2,499</p>
                 </div>
               </div>
             </div>
 
             <div
-              className="group cursor-pointer"
+              className="group cursor-pointer hover-lift"
               onClick={() => setSelectedProduct(enhancedMockProducts.find((p) => p.id === 3))}
             >
-              <div className="relative h-44 bg-black rounded-lg overflow-hidden">
+              <div className="relative h-44 bg-card rounded-xl overflow-hidden shadow-md">
                 <img
                   src="/classic-leather-jacket.png"
                   alt="Designer Leather Jacket"
-                  className="w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-500"
+                  className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
                 />
-                <div className="absolute inset-0 bg-black/40 group-hover:bg-black/20 transition-colors duration-300"></div>
+                <div className="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent"></div>
                 <div className="absolute bottom-4 left-4 text-white">
-                  <h4 className="font-bold">Designer Leather Jacket</h4>
-                  <p className="text-white/80 text-sm">Trade</p>
+                  <h4 className="font-semibold">Designer Leather</h4>
+                  <p className="text-white/90 text-sm">Trade</p>
                 </div>
               </div>
             </div>
 
             <div
-              className="group cursor-pointer"
+              className="group cursor-pointer hover-lift"
               onClick={() => setSelectedProduct(enhancedMockProducts.find((p) => p.id === 4))}
             >
-              <div className="relative h-44 bg-black rounded-lg overflow-hidden">
+              <div className="relative h-44 bg-card rounded-xl overflow-hidden shadow-md">
                 <img
                   src="/pokemon-cards.jpg"
                   alt="Rare Pokemon Cards"
-                  className="w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-500"
+                  className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
                 />
-                <div className="absolute inset-0 bg-black/40 group-hover:bg-black/20 transition-colors duration-300"></div>
+                <div className="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent"></div>
                 <div className="absolute bottom-4 left-4 text-white">
-                  <h4 className="font-bold">Pokemon Cards</h4>
-                  <p className="text-white/80 text-sm">Auction</p>
+                  <h4 className="font-semibold">Pokemon Cards</h4>
+                  <p className="text-white/90 text-sm">Auction</p>
                 </div>
               </div>
             </div>
 
             <div
-              className="group cursor-pointer"
+              className="group cursor-pointer hover-lift"
               onClick={() => setSelectedProduct(enhancedMockProducts.find((p) => p.id === 5))}
             >
-              <div className="relative h-44 bg-black rounded-lg overflow-hidden">
+              <div className="relative h-44 bg-card rounded-xl overflow-hidden shadow-md">
                 <img
                   src="/elegant-dining-set.png"
                   alt="Minimalist Dining Set"
-                  className="w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-500"
+                  className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
                 />
-                <div className="absolute inset-0 bg-black/40 group-hover:bg-black/20 transition-colors duration-300"></div>
+                <div className="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent"></div>
                 <div className="absolute bottom-4 left-4 text-white">
-                  <h4 className="font-bold">Dining Set</h4>
-                  <p className="text-white/80 text-sm">$899</p>
+                  <h4 className="font-semibold">Dining Set</h4>
+                  <p className="text-white/90 text-sm">$899</p>
                 </div>
               </div>
             </div>
           </div>
 
-          {/* Scrolling Deals Banner */}
-          <div className="relative overflow-hidden mb-12">
-            <div className="flex gap-6 animate-scroll-x">
-              <div className="min-w-[300px] h-32 bg-black rounded-lg p-6 text-white relative overflow-hidden group hover:bg-gray-900 transition-colors duration-300">
+          {/* Refined Scrolling Banner */}
+          <div className="relative overflow-hidden mb-16 animate-fade-in">
+            <div className="flex gap-8 animate-scroll-x">
+              <div className="min-w-[320px] h-36 bg-card rounded-2xl p-8 shadow-lg relative overflow-hidden group hover-lift">
                 <div className="relative z-10">
-                  <h3 className="text-lg font-bold mb-2">Flash Sale</h3>
-                  <p className="text-white/80 text-sm">Up to 50% off</p>
+                  <h3 className="text-xl font-serif font-bold mb-2 text-foreground">Flash Sale</h3>
+                  <p className="text-muted-foreground">Up to 50% off premium items</p>
                 </div>
-                <div className="absolute -right-4 -bottom-4 w-16 h-16 bg-white/10 rounded-full"></div>
+                <div className="absolute -right-6 -bottom-6 w-20 h-20 bg-accent/10 rounded-full"></div>
               </div>
 
-              <div className="min-w-[300px] h-32 bg-gray-900 rounded-lg p-6 text-white relative overflow-hidden group hover:bg-black transition-colors duration-300">
+              <div className="min-w-[320px] h-36 bg-primary rounded-2xl p-8 text-primary-foreground shadow-lg relative overflow-hidden group hover-lift">
                 <div className="relative z-10">
-                  <h3 className="text-lg font-bold mb-2">Ending Soon</h3>
-                  <p className="text-white/80 text-sm">Final hours</p>
+                  <h3 className="text-xl font-serif font-bold mb-2">Ending Soon</h3>
+                  <p className="text-primary-foreground/80">Final hours on auctions</p>
                 </div>
-                <div className="absolute -right-4 -bottom-4 w-16 h-16 bg-white/10 rounded-full"></div>
+                <div className="absolute -right-6 -bottom-6 w-20 h-20 bg-white/10 rounded-full"></div>
               </div>
 
-              <div className="min-w-[300px] h-32 bg-black rounded-lg p-6 text-white relative overflow-hidden group hover:bg-gray-900 transition-colors duration-300">
+              <div className="min-w-[320px] h-36 bg-accent rounded-2xl p-8 text-accent-foreground shadow-lg relative overflow-hidden group hover-lift">
                 <div className="relative z-10">
-                  <h3 className="text-lg font-bold mb-2">New Arrivals</h3>
-                  <p className="text-white/80 text-sm">Fresh daily</p>
+                  <h3 className="text-xl font-serif font-bold mb-2">New Arrivals</h3>
+                  <p className="text-accent-foreground/80">Fresh daily selections</p>
                 </div>
-                <div className="absolute -right-4 -bottom-4 w-16 h-16 bg-white/10 rounded-full"></div>
+                <div className="absolute -right-6 -bottom-6 w-20 h-20 bg-white/10 rounded-full"></div>
               </div>
 
-              <div className="min-w-[300px] h-32 bg-gray-900 rounded-lg p-6 text-white relative overflow-hidden group hover:bg-black transition-colors duration-300">
+              <div className="min-w-[320px] h-36 bg-card rounded-2xl p-8 shadow-lg relative overflow-hidden group hover-lift">
                 <div className="relative z-10">
-                  <h3 className="text-lg font-bold mb-2">Trade Deals</h3>
-                  <p className="text-white/80 text-sm">Exchange items</p>
+                  <h3 className="text-xl font-serif font-bold mb-2 text-foreground">Trade Deals</h3>
+                  <p className="text-muted-foreground">Exchange premium items</p>
                 </div>
-                <div className="absolute -right-4 -bottom-4 w-16 h-16 bg-white/10 rounded-full"></div>
+                <div className="absolute -right-6 -bottom-6 w-20 h-20 bg-primary/10 rounded-full"></div>
               </div>
             </div>
           </div>
 
-          {/* Minimal Stats */}
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
-            <div className="text-center p-6 border border-gray-200 dark:border-gray-800 rounded-lg hover:bg-gray-50 dark:hover:bg-gray-900 transition-colors duration-300">
-              <div className="text-2xl font-bold mb-1">50K+</div>
+          {/* Elegant Stats */}
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-6 animate-slide-up">
+            <div className="text-center p-8 bg-card rounded-2xl shadow-md hover-lift">
+              <div className="text-3xl font-serif font-bold mb-2 text-primary">50K+</div>
               <div className="text-sm text-muted-foreground">Active Listings</div>
             </div>
 
-            <div className="text-center p-6 border border-gray-200 dark:border-gray-800 rounded-lg hover:bg-gray-50 dark:hover:bg-gray-900 transition-colors duration-300">
-              <div className="text-2xl font-bold mb-1">25K+</div>
+            <div className="text-center p-8 bg-card rounded-2xl shadow-md hover-lift">
+              <div className="text-3xl font-serif font-bold mb-2 text-primary">25K+</div>
               <div className="text-sm text-muted-foreground">Live Auctions</div>
             </div>
 
-            <div className="text-center p-6 border border-gray-200 dark:border-gray-800 rounded-lg hover:bg-gray-50 dark:hover:bg-gray-900 transition-colors duration-300">
-              <div className="text-2xl font-bold mb-1">15K+</div>
+            <div className="text-center p-8 bg-card rounded-2xl shadow-md hover-lift">
+              <div className="text-3xl font-serif font-bold mb-2 text-primary">15K+</div>
               <div className="text-sm text-muted-foreground">Successful Trades</div>
             </div>
 
-            <div className="text-center p-6 border border-gray-200 dark:border-gray-800 rounded-lg hover:bg-gray-50 dark:hover:bg-gray-900 transition-colors duration-300">
-              <div className="text-2xl font-bold mb-1">4.9/5</div>
+            <div className="text-center p-8 bg-card rounded-2xl shadow-md hover-lift">
+              <div className="text-3xl font-serif font-bold mb-2 text-accent">4.9/5</div>
               <div className="text-sm text-muted-foreground">User Rating</div>
             </div>
           </div>
@@ -646,7 +905,7 @@ function MarketplaceContent() {
       </section>
 
       {/* Categories & Filters */}
-      <section className="py-8 px-4 sm:px-6 lg:px-8 border-b">
+      <section className="py-8 px-4 sm:px-6 lg:px-8 border-b border-border/50 bg-background">
         <div className="max-w-7xl mx-auto">
           <div className="flex flex-wrap items-center justify-between gap-4 mb-6">
             <div className="flex flex-wrap gap-2">
@@ -657,7 +916,9 @@ function MarketplaceContent() {
                     key={category.id}
                     variant={selectedCategory === category.id ? "default" : "outline"}
                     onClick={() => setSelectedCategory(category.id)}
-                    className="rounded-full"
+                    className={`rounded-full transition-all duration-300 ${
+                      selectedCategory === category.id ? "btn-primary" : "hover:border-primary hover:text-primary"
+                    }`}
                   >
                     <Icon className="w-4 h-4 mr-2" />
                     {category.name}
@@ -667,15 +928,15 @@ function MarketplaceContent() {
             </div>
 
             <div className="flex items-center gap-2">
-              <Button variant="outline" size="icon">
+              <Button variant="outline" size="icon" className="hover:border-primary hover:text-primary bg-transparent">
                 <Filter className="w-4 h-4" />
               </Button>
-              <div className="flex border rounded-lg">
+              <div className="flex border border-border rounded-lg">
                 <Button
                   variant={viewMode === "grid" ? "default" : "ghost"}
                   size="icon"
                   onClick={() => setViewMode("grid")}
-                  className="rounded-r-none"
+                  className={`rounded-r-none ${viewMode === "grid" ? "btn-primary" : ""}`}
                 >
                   <Grid className="w-4 h-4" />
                 </Button>
@@ -683,7 +944,7 @@ function MarketplaceContent() {
                   variant={viewMode === "list" ? "default" : "ghost"}
                   size="icon"
                   onClick={() => setViewMode("list")}
-                  className="rounded-l-none"
+                  className={`rounded-l-none ${viewMode === "list" ? "btn-primary" : ""}`}
                 >
                   <List className="w-4 h-4" />
                 </Button>
@@ -694,20 +955,41 @@ function MarketplaceContent() {
       </section>
 
       {/* Products Grid */}
-      <section className="py-12 px-4 sm:px-6 lg:px-8">
+      <section className="py-12 px-4 sm:px-6 lg:px-8 bg-background">
         <div className="max-w-7xl mx-auto">
           <div className="flex items-center justify-between mb-8">
-            <h2 className="text-2xl font-bold">{filteredProducts.length} Products Found</h2>
+            <h2 className="text-2xl font-serif font-bold text-foreground">{filteredProducts.length} Products Found</h2>
             <DropdownMenu>
               <DropdownMenuTrigger asChild>
-                <Button variant="outline">Sort by: Featured</Button>
+                <Button
+                  variant="outline"
+                  className="hover:border-primary hover:text-primary bg-card/80 backdrop-blur-sm border-border/50 shadow-md hover:shadow-lg transition-all duration-300"
+                >
+                  <Filter className="w-4 h-4 mr-2" />
+                  Sort by: Featured
+                </Button>
               </DropdownMenuTrigger>
-              <DropdownMenuContent>
-                <DropdownMenuItem>Featured</DropdownMenuItem>
-                <DropdownMenuItem>Price: Low to High</DropdownMenuItem>
-                <DropdownMenuItem>Price: High to Low</DropdownMenuItem>
-                <DropdownMenuItem>Ending Soon</DropdownMenuItem>
-                <DropdownMenuItem>Newest</DropdownMenuItem>
+              <DropdownMenuContent className="bg-card/95 backdrop-blur-xl border-border/50 shadow-2xl min-w-[200px]">
+                <DropdownMenuItem className="hover:bg-primary/10 transition-all duration-200">
+                  <Star className="w-4 h-4 mr-3" />
+                  Featured
+                </DropdownMenuItem>
+                <DropdownMenuItem className="hover:bg-primary/10 transition-all duration-200">
+                  <TrendingUp className="w-4 h-4 mr-3" />
+                  Price: Low to High
+                </DropdownMenuItem>
+                <DropdownMenuItem className="hover:bg-primary/10 transition-all duration-200">
+                  <TrendingUp className="w-4 h-4 mr-3 rotate-180" />
+                  Price: High to Low
+                </DropdownMenuItem>
+                <DropdownMenuItem className="hover:bg-primary/10 transition-all duration-200">
+                  <Clock className="w-4 h-4 mr-3" />
+                  Ending Soon
+                </DropdownMenuItem>
+                <DropdownMenuItem className="hover:bg-primary/10 transition-all duration-200">
+                  <Badge className="w-4 h-4 mr-3" />
+                  Newest
+                </DropdownMenuItem>
               </DropdownMenuContent>
             </DropdownMenu>
           </div>
@@ -729,53 +1011,53 @@ function MarketplaceContent() {
       </section>
 
       {/* Footer */}
-      <footer className="bg-secondary/50 py-12 px-4 sm:px-6 lg:px-8 mt-20">
+      <footer className="bg-secondary/50 py-16 px-4 sm:px-6 lg:px-8 mt-20 border-t border-border/50">
         <div className="max-w-7xl mx-auto">
           <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
             <div>
               <div className="flex items-center gap-2 mb-4">
-                <div className="w-8 h-8 bg-gradient-gold rounded-lg flex items-center justify-center">
-                  <ShoppingBag className="w-5 h-5 text-black" />
+                <div className="w-8 h-8 gradient-primary rounded-lg flex items-center justify-center">
+                  <ShoppingBag className="w-5 h-5 text-primary-foreground" />
                 </div>
-                <span className="font-serif text-xl font-bold">MarketPlace</span>
+                <span className="font-serif text-xl font-bold text-foreground">MarketPlace</span>
               </div>
-              <p className="text-muted-foreground">
+              <p className="text-muted-foreground leading-relaxed">
                 The premium marketplace for auctions, fixed-price sales, and product trades.
               </p>
             </div>
 
             <div>
-              <h3 className="font-semibold mb-4">Marketplace</h3>
-              <ul className="space-y-2 text-muted-foreground">
-                <li>Browse Products</li>
-                <li>Start Selling</li>
-                <li>How Auctions Work</li>
-                <li>Trading Guide</li>
+              <h3 className="font-semibold mb-4 text-foreground">Marketplace</h3>
+              <ul className="space-y-3 text-muted-foreground">
+                <li className="hover:text-primary transition-colors cursor-pointer">Browse Products</li>
+                <li className="hover:text-primary transition-colors cursor-pointer">Start Selling</li>
+                <li className="hover:text-primary transition-colors cursor-pointer">How Auctions Work</li>
+                <li className="hover:text-primary transition-colors cursor-pointer">Trading Guide</li>
               </ul>
             </div>
 
             <div>
-              <h3 className="font-semibold mb-4">Support</h3>
-              <ul className="space-y-2 text-muted-foreground">
-                <li>Help Center</li>
-                <li>Contact Us</li>
-                <li>Safety Tips</li>
-                <li>Community</li>
+              <h3 className="font-semibold mb-4 text-foreground">Support</h3>
+              <ul className="space-y-3 text-muted-foreground">
+                <li className="hover:text-primary transition-colors cursor-pointer">Help Center</li>
+                <li className="hover:text-primary transition-colors cursor-pointer">Contact Us</li>
+                <li className="hover:text-primary transition-colors cursor-pointer">Safety Tips</li>
+                <li className="hover:text-primary transition-colors cursor-pointer">Community</li>
               </ul>
             </div>
 
             <div>
-              <h3 className="font-semibold mb-4">Company</h3>
-              <ul className="space-y-2 text-muted-foreground">
-                <li>About Us</li>
-                <li>Careers</li>
-                <li>Press</li>
-                <li>Legal</li>
+              <h3 className="font-semibold mb-4 text-foreground">Company</h3>
+              <ul className="space-y-3 text-muted-foreground">
+                <li className="hover:text-primary transition-colors cursor-pointer">About Us</li>
+                <li className="hover:text-primary transition-colors cursor-pointer">Careers</li>
+                <li className="hover:text-primary transition-colors cursor-pointer">Press</li>
+                <li className="hover:text-primary transition-colors cursor-pointer">Legal</li>
               </ul>
             </div>
           </div>
 
-          <div className="border-t mt-8 pt-8 text-center text-muted-foreground">
+          <div className="border-t border-border/50 mt-12 pt-8 text-center text-muted-foreground">
             <p>&copy; 2025 MarketPlace. All rights reserved.</p>
           </div>
         </div>
